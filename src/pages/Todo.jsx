@@ -1,5 +1,6 @@
 import { useState,useRef } from "react";
 import ListItem from "../components/ListItem";
+import { v4 as uuidv4 } from "uuid";
 
 function Todo (){
 
@@ -11,10 +12,22 @@ function Todo (){
     //Add a new todo
     const addTodo=() => {
         const todoValue = inputRef.current.value;
+
+        const newTodo= {name: todoValue, id: uuidv4()}
+
         console.log(todoValue);
 
-        setTodos([...todos, todoValue]);
+        setTodos([newTodo, ...todos]);
+        inputRef.current.value="";
     };
+
+    const deleteTodo=(id) =>{
+        // detete todo by id
+        //filter items different to given id
+        setTodos(todos.filter((item)=> item.id!== id ))
+
+
+    }
 
 
 
@@ -27,8 +40,8 @@ function Todo (){
             </div>
             <ul className="flex flex-col gap-2" >
                 {
-                    todos.map((value, index)=> {
-                        return <ListItem key={index} text={value}/>
+                    todos.map((item)=> {
+                        return <ListItem key={item.id} text={item.name} onDelete={()=> deleteTodo(item.id)}/>
                     })
                 }            
                 
