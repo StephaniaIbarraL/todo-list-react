@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function ListItem({text, onDelete}){
     //console.log(props);
 
     const [checked, setChecked] = useState(false);
+
+    useEffect(()=>{
+        //init component
+        console.log("Init")
+        return ()=>{
+            console.log("cleanup")
+        }
+    },[]);
 
     const handleCheck = ()=> {
         setChecked(!checked); //toma el valor que esta en el check box, y lo cambia, si es falso lo cambia a verdadero, y si esta en verdadero lo cambia a falso
